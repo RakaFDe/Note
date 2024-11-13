@@ -1,0 +1,68 @@
+docker container ls #menampilkan list container
+docker container ls -a #menampilkan list container all/--all
+docker container create --name namaserver1 mongo #create container dengan nama
+docker container start mongoserver1 #start container 
+docker container stop mongoserver1 #stop container
+
+#copy
+docker cp index.html web-fi:/usr/share/nginx/html (container name and path)
+
+#remove
+docker container rm mongoserver1 #remove container
+docker rmi imagesid *exp docker rmi *abced233
+docker rm -f names *force remove
+
+#port
+docker run -itd --name web01 -p 8080:80 nginx (default port is 80 and 8080 for access)
+docker container create --name mongoserver1 -p 8081:27017 mongo #create container -p(port) 8081 target port 27017 default port
+
+#network
+docker network ls #show list network
+docker network create jenkins #create docker network name jenkins
+
+#rename
+docker rename *exp docker rename eager_02 ubuntu_01 (dari eager_02 ke ubuntu_01)
+
+#run-execute
+docker exec -it *exp docker exec -it container id /bin/bash
+docker run -itd ubuntu
+
+#images
+
+docker images #menampilkan images yang ada local
+docker image rm mongo #hapus image yang di local
+
+#backup
+docker commit -p images images-backup
+docker save -o data-backup-images/web-fi-bp.zip web-fi-bp
+docker load -i data-backup-images/web-fi-bp.zip *load from backup
+
+#docker monitoring
+docker portainer
+
+#build
+docker build --tag name #build docker dengan ketentuan yang ada di file Dockerfile
+
+#push image
+docker push raakfp/simple-apps
+
+
+#docker compose
+
+file bernama docker-compose.yml
+services:
+  web-nginx: #nama
+    ports:
+      - "1010:80"
+		image: "nginx"
+
+docker compose ls *show compose
+docker compose up -d
+docker compose down
+
+#docker login
+
+account
+rakafitrap@gmail.com
+rakafp
+123456@ABcd

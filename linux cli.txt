@@ -1,0 +1,252 @@
+man the best command to check other command exp man ls (to check ls command)
+*****rm -rf ***** to force remove exp* rm -rf datadiri
+ss -tulpn
+
+/etc/apt/source.list ****if cant update disable this
+
+ufw ubuntu firewall
+sudo ufw status; check avaible port/service
+sudo mysql; masuk mysql
+netstat / top / htop ;show process or list process stat  -> netstat -tulpn
+ps to check process information exp ps aux | grep nginx
+sudo ip add; cek ip 
+connect ssh
+ssh user@ip
+ssh root@202.10.14.225
+ls list file
+pwd prints the current working directory path
+tree show directory on tree
+whoami show current user
+hostnamectl show kernel version
+echo $(curl -s ifconfig.me) check current ip
+cd move directory ex cd~ cd..
+touch create file ex touch test.tx or touch test{1..3}.txt
+mkdir make directory or folder
+mv to move file to other directory from a to b ex mv /root/a.txt /root/file/a.txt
+grep to find word and -i for ignore caps exp grep -i {affix} {file} -> grep -i dir from newhomepage.html
+grep <text> * -R
+cut to print file exp cut -d,-f3 <csvfile> ->> find 3rd coloumn csv
+uptime view time and user
+free -m view usage
+df show freedisk exp df -a ->>  df -m (megabyte) ->df -BG --block-size=1G ->df -BG
+du show size exp du -sh coba
+fdisk check disk exp ->    sudo fdisk -l /dev/sda
+lsblk (check space)
+uname -a check kernel or os
+systemctl  to check the service status exp systemctl status mysql
+ip to show ip exp ip addr show  -> ifconfig 
+mount to mount exp mount /dir1 /dir2 ->>>>> /dev/sda2 /mnt
+cat .bash_history (to check command)
+sudo usermod -a -G namagrup namauser
+group
+chgrp change group exp chgrp ruby coba.html
+chown change owner exp chown user_baru:group_baru namafile
+chmod to change modified file giving more action(r w x) exp -> chmod +x hello.sh 
+
+file manager
+chmod to change modified file exp chmod 700 /tmp/abc (700 give to rwx)(600 rw)(400 r)(2 w)(1 x)
+setfacl  set file permission exp setfacl -m u:nico:rwx /tmp/file
+(archive)
+tar to archive file exp tar --file=arsip.tar --create file1 file2 file3 -->(for whole dir) tar -cf arsip.tar /etc
+tar -tf user-etc.tar (check archive)
+tar -xf user-etc.tar (to extract)
+sudo tar -czf arsip.tar.gz /etc (to compress)
+tar -xzf arsip.tar.gz(extract compress)
+
+service 
+systemctl list service unit exp    systemctl list-units --type=service --state=inactive
+systemctl status sshd.service (cek status)
+systemctl is-active nginx
+systemctl is-enabled nginx (cek autorun service)
+systemctl is-failed nginx (memverifikasi apakah service gagal dijalankan saat sistem dimulai)
+systemctl --failed --type=service (check service yang gagal running / autostart)
+systemctl start nginx -> systemctl stop nginx -> systemctl restart nginx - >systemctl enable nginx
+
+network
+show ip
+ip a,ip addr show eth0
+ip route -> show routing exp ip route -> ip -6 route(show ipv6 route)
+ip route add (to add ip address) -> ip route add default via 192.168.1.1
+ip addr flush (to remove ip temp ip address)*carefull
+
+copy
+scp to secure copy, scp [options] user@serverasal:file-asal user@servertujuan:file-tujuan
+download
+wget to download from web or url -O mean to rename file exp -> wget -O ubuntu-jammy.iso https://kartolo.net/data64.iso
+wget -P for new path exp wget -P /tmp {url}
+wget -c for continue download wget -c -P /tmp {url}
+wget -i to run the wget multiple download exp wget -i list.txt
+wget -m to mirror the asset exp     wget -m https://www.w3schools.com
+curl
+curl URL > namafile
+rsync -r (recursive) melakukan sinkronisasi semua isi directory) exp  rsync -r normalgrade/ txtfilecop
+rsync -a (archive). menyinkronkan secara rekursif dan mempertahankan symbolic links, file khusus dan file perangkat, waktu modifikasi, group, owner, serta permission
+rsync -v for detailing exp rsync -av dir1/ dir2
+rsync -z for compress
+rsync -P for progress
+rsync -a --delete sumber tujuan (to delete and make sure)
+rsync -an --delete sumber tujuan
+rsync -a --exclude=*.log sumber tujuan
+rsync -a --exclude=*.log --include=user.log,access.log sumber tujuan
+
+encrypt and decrypt
+gnupg
+gpg -c file3.txt -> and enter AES256 for passphrase
+
+openssl
+    openssl genrsa -aes128 -out haris_private.pem 1024 (generate private key)
+    openssl rsa -in haris_private.pem -pubout > haris_public.pem (extract private to get public key)
+    openssl rsa -in haris_public.pem -pubin -text -noout (public key)
+    openssl pkeyutl -encrypt -inkey haris_public.pem -pubin -in file3.txt -out file3_rahasia.enc(encrypt file)
+
+package 
+sudo apt show htop (to check about htop such version and package)
+crontab -e (to edit crontable)
+crontab -l (to show user active cronjob)
+crontab -u username -e ( to edit other user cronjob)
+apt purge *exp -> apt purge ngnx && apt autoremove (remove package with config)
+----------------------------------
+simple shell
+echo `date` >> tanggal.txt ->     chmod +x skrip-tanggal.sh(allow to execute)
+bash skrip-tanggal.sh ->     /home/haris/hello.sh ->     ./hello.sh(to run)
+
+--------------------------------
+user 
+getent passwd (check user)
+sudo userdel dicoding (delete)
+=========
+cant login 
+/var/empty/sshd
+
+User login
+****check user login allow******** cd /etc/ssh find sshd_config
+find 
+PermitRootLogin yes
+DenyUsers nico
+Allowusers datadmin
+
+PubkeyAuthentication yes
+AuthorizedKeysFile     %h/.ssh/authorized_keys
+
+PasswordAuthentication yes (no to denied)
+
+ChallengeResponseAuthentication no
+
+fail2ban
+sudo apt install fail2ban (to block)
+/etc/fail2ban/jail.local (lokasi configurasi fail2ban)(lama waktu ban)
+
+----------
+device 
+iostat (memonitor input/output sistem)
+iostat -cd (cpu and disk) ->   iostat -cdmx for megabyte and detail  
+iostat -c 10 2 (10 detik 2 kali)
+
+ss (socket statistic) ex ss -alts(summarize)(listen)(all)(tcp)(4 ipv4)
+ss -at '( dport = :22 or sport = :22 )'  -> filter port 22
+-----------------
+monitor
+top -o %CPU
+ps -g root (process status group root)
+ps -C sshd
+ps -eo pid,cmd (filter coloumn)
+ps -eo pid,%mem,cmd --sort=-%mem (sort memory desced)
+ps -eo pid,%mem,cmd --sort=-%mem | head -n 4 (limit 1 judul 3 baris proses)
+kill $(ps -eo pid --sort=-%cpu | head -n 4) (mematikan 3 proses cpu yang paling tinggi)
+-----------
+logging
+who -H (check user)(/var/log/utmp: melacak pengguna yang saat ini masuk ke sistem.)
+tail /var/log/syslog (stores all activity data across the global system)
+last -R(user log)(/var/log/wtmp)
+lastb (/var/log/btmp)
+
+timedatectl (check timezone) -> timedatectl status -->     timedatectl list-timezones(list)
+sudo timedatectl set-timezone Asia/Jakarta -> set timzone
+sudo timedatectl set-ntp true (sinkron)
+sudo journalctl (check log jurnald)
+sudo journalctl -b (last boot)
+sudo journalctl --list-boots
+journalctl -b -2 /     journalctl -b boot_id ( berarti entri log tersebut semakin baru. Misal, -2 lebih baru dari -5. Sementara itu, angka 0 menandakan entri log untuk boot saat ini. Kemudian, kolom kedua merupakan identitas boot atau boot_id.)
+sudo journalctl --since "2024-09-23 08:12:00" (check journal pada kondisi setelah tgl)
+sudo journalctl --since "yesterday"
+sudo journalctl --since 02:00 --until "1 hour ago"
+journalctl -u ssh.service (base on service)
+sudo journalctl --no-pager (custom jurnal page)
+sudo journalctl -b -u ssh -o json (mengasilkan log sejak boot saat ini untuk service ssh dengan format output berbentuk JSON.) sudo journalctl -b -u ssh -o json-pretty
+sudo journalctl -b -u ssh -o json-pretty > ssh-log.json (simpan log)
+-----------------
+nginx 
+/var/log/nginx (log nginx)
+
+----------------------------------
+docker
+sudo apt install docker
+sudo systemctl status docker
+sudo docker create fedora (create and get image)
+sudo docker create -t -i debian bash (Opsi -t dan -i mengalokasikan terminal ke container agar berinteraksi langsung container)
+sudo ps (Untuk melihat container yang sedang berjalan (running)) + -a untuk all(sudo ps -a)
+sudo docker start e9ecc18a5e3d -> id yang dimaksud atau dengan names
+sudo docker restart mystifying_meitner
+sudo docker rm e9ecc18a5e3d peaceful_chebyshev
+sudo docker images (check image)
+sudo docker build -t latihan:0.1 .
+docker run --name container_latihan latihan:0.1
+docker rmi -f <Image_name> (to remove image) exp docker rmi latihan:0.1 ubuntu:latest 98ffdbffd207
+docker rm -f < Container_ID>
+---------------------------------
+directory
+
+Some Important Directories
+• Home Directories: /root, /home/username
+• User Executable: /bin, /usr/bin, /usr/local/bin • System Executables: /sbin, /usr/sbin,
+/usr/local/sbin
+⚫ Other Mountpoints: /media, /mnt
+• Configuration: /etc
+• Temporary Files: /tmp
+• Kernels and Bootloader: /boot
+• Server Data: /var, /srv
+• System Information: /proc, /sys
+.
+Shared Libraries: /lib, /usr/lib, /usr/local/lib
+
+/bin/ ->ESSENTIAL USER COMMAND BINARIES
+/boot/ ->STATIC FILES OF THE BOOT LOADER
+/dev/ ->DEVICE FILES
+/etc/ ->HOST-SPECIFIC SYSTEM CONFIGURATION REQUIRED DIRECTORIES, OPT, XII, SGML, XML
+/home/ ->USER HOME DIRECTORIES
+/lib/ ->ESSENTIAL SHARED LIBRARIES AND KERNEL MODULES
+/media/ ->MOUNT POINT FOR REMOVABLE MEDIA
+/mnt/ ->MOUNT POINT FOR A TEMPORARILY MOUNTED FILESYSTEM
+/opt/ ->ADD-ON APPLICATION SOFTWARE PACKAGES
+/sbin/ ->SYSTEM BINARIES
+/srv/ ->DATA FOR SERVICES PROVIDED BY THIS SYSTEM
+/tmp/ ->TEMPORARY FILES
+/usr/ ->(MULTI-)USER UTILITIES AND APPLICATIONS
+SECONDARY HIERARCHY
+REQUIRED DIRECTORIES, BIN, INCLUDE, LIB, LOCAL, SBIN, SHARE
+/var/ ->VARIABLE FILES
+/root/ ->HOME DIRECTORY FOR THE ROOT USER
+/proc/ ->VIRTUAL FILESYSTEM DOCUMENTING KERNEL
+AND PROCESS STATUS AS TEXT FILES
+
+======================================
+disk virtual
+dd if=/dev/zero of=virtualdisk.img bs=1M count=1000
+sudo losetup loop0 virtualdisk.img
+sudo fdisk -l /dev/sda
+sudo fdisk /dev/loop0
+sudo parted /dev/loop0
+sudo mkfs.ext4 /dev/loop0p1 (partisi)
+file virtualdisk.img
+stat -f virtualdisk.img
+
+
+Git
+connect git
+run "ssh-keygen -t rsa"
+copy the key SHA256 add to ssh and gpg keys on setting "new ssh key"
+
+user : rui
+password : 123456
+mysql rui
+password : password

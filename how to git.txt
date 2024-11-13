@@ -1,0 +1,25 @@
+git commit -am "isi pesan commit" #untuk commit
+git status #untuk cek status apakah ada yang perlu di action
+git branch #untuk cek branch
+git branch branch1 #untuk tambah branch branch1
+git history #check history
+git log #untuk menampilkan log perubahan pada git/repository
+git log --oneline
+git log --all --decorate --oneline --graph #menampilkan log dan meringkas dalam 1 line
+alias graph="git log --all --decorate --oneline --graph" # untuk membuat alias graph yang menampilkan log tsb
+graph # untuk menampilkan log yang sudah di buat alias
+git checkout branch1 #mengganti branch ke branch1
+git checkout master #mengganti branch ke master / main
+git add . #untuk menerapkan staging(persiapan untuk commit) sebelum commit semua file pada folder
+git add staff.html #untuk menerapkan staging(persiapan untuk commit) sebelum commit untuk file tertentu
+git merge branch1 #untuk merge dengan branch1
+git branch -d branch1 #untuk hapush branch
+git branch --merged #untuk mengecek branch yang sudah merge
+
+git remote
+git remote -v
+git config --list#untuk liat settingan dan cek user git pada bagian user
+git config --global user.name "username"
+git config --global user.email "email"
+
+git revert -n idcommit #revert to commit exp* git revert -n 123abcd
