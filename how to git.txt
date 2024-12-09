@@ -23,3 +23,12 @@ git config --global user.name "username"
 git config --global user.email "email"
 
 git revert -n idcommit #revert to commit exp* git revert -n 123abcd
+
+
+
+how to git login
+-install gh
+-gh auth login
+-chose git ->https -> personal token -> add token from github
+-where is token github? settings->developer settings->personal access tokens->check the thing
+
