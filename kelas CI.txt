@@ -1,0 +1,412 @@
+Pengenalan Integration
+
+Integrasi berarti penggabungan kode baru atau perubahan kode yang ditulis oleh satu atau banyak kontributor (bisa Developer, IT Operations, Tester/QA, dsb) ke dalam satu proyek aplikasi atau perangkat lunak. Proses integrasi ini biasanya dilakukan dengan merge (menggabungkan) feature branch ke main branch melalui pull request.
+
+Mari kita bahas soal git dan istilahnya lebih dalam.
+Pengenalan Git
+
+Dengan version control seperti git, setiap Developer bisa berkolaborasi di codebase yang sama, melakukan tracking pada setiap perubahan, mengetahui siapa yang melakukan perubahan di kode, memisahkan pengerjaan fitur tertentu, dan masih banyak lagi.
+
+Git dapat berjalan di komputer lokal ataupun server. Namun, bila aplikasinya dikembangkan oleh banyak developer, tentu membutuhkan git server atau git hosting agar source code yang dimiliki setiap developer bisa saling sinkron dan up-to-date.
+
+Kita bisa membuat git server sendiri atau menggunakan layanan berbasis cloud seperti GitLab atau GitHub. Dengan git hosting tersebut, kita akan lebih mudah mengelola urusan repositori atau penyimpanan kodenya.
+
+Bagi Anda yang belum terbiasa dengan git, berikut beberapa istilah dalam git yang perlu Anda ketahui agar tidak asing dengannya.
+
+    Repository
+    Repository adalah istilah yang digunakan sebagai penyimpanan source code. Repository dapat bersifat local dan remote.
+
+    Clone
+    Clone (cloning) adalah proses menyalin atau mengkloning repositori dari remote repository (misal, GitHub repository) ke local repository (komputer pribadi) untuk mempermudah penambahan, pengubahan, atau penghapusan kode; perbaikan konflik saat penggabungan branch (merge conflict); dan sebagainya.
+
+    Branch
+    Sebagaimana yang kita tahu, git adalah version control system, di mana versioning ini salah satunya diatur oleh fitur branch (cabang). Setiap git repository memiliki minimal satu branch, yakni main branch (cabang utama).
+
+    Commit
+    Commit merupakan sebuah aksi yang dilakukan Developer untuk membuat rekam jejak (snapshot) terhadap perubahan kode yang ia tulis.
+
+    Push
+    Perintah git push merupakan tindakan lanjutan dari perintah git commit. Push merupakan aksi untuk mengirim perubahan kode dari local repository ke remote repository. Push dilakukan untuk memperbarui kode yang ada di remote dengan kode yang ada di local.
+
+    Pull Request
+    Pull Request adalah sebuah pengajuan/permintaan (request) untuk menggabungkan perubahan kode pada suatu branch ke branch lain.
+
+    Merge
+    Merge merupakan aksi untuk menggabungkan perubahan kode pada suatu branch ke branch lain. Merge dapat dilakukan melalui atau tanpa pull request.
+
+Oke, sekarang Anda sudah kenal git dan beberapa istilahnya. Namun, itu semua masih belum cukup. Masih ada satu hal lagi yang perlu Anda pahami, yakni branching strategy.
+Branching Strategy
+
+Karena praktik continuous integration erat kaitannya dengan “integration” seperti mengintegrasikan atau merge branch, kita perlu tahu apa saja jenis-jenis branching strategy yang acap dipakai untuk mengelola source code.
+
+Branching strategy adalah strategi yang diadopsi oleh tim Developer saat menulis (coding), menggabungkan (merging), dan menggelar (deploy) kode menggunakan version control system.
+
+Kita hanya akan bahas GitHub flow dan Trunk-based development.
+
+    GitHub flow
+    Seperti yang tertulis jelas pada namanya, strategi ini diciptakan dan dipopulerkan oleh GitHub. Dengan GitHub flow, Developer akan memulai pengembangan aplikasi di main branch. Kemudian, jikalau ingin membuat fitur atau melakukan perubahan besar pada kode aplikasi, Developer perlu membuat branch baru (yang berasal dari main branch, disebut feature branch) guna mengisolasi pekerjaan mereka. Bila penulisan kode sudah selesai, feature branch tersebut lantas digabungkan kembali ke main branch; dan feature branch kemudian dihapus.
+
+    Trunk-based development
+    Trunk-based development adalah branching strategy yang mendorong Developer untuk berkolaborasi pada kode di branch tunggal bernama “trunk” (alias “main” jika dalam nomenklatur git). Ide utama di balik strategi ini adalah agar Developer membuat perubahan kode dalam skala kecil dengan lebih sering. Tujuannya supaya Developer bisa lebih fokus dan lebih dekat dengan main branch, sekaligus mempercepat proses deploy sehingga Developer dapat langsung mengetahui hasil dari yang mereka tulis.
+
+Pastikan Anda benar-benar paham sebelum lanjut ke materi berikutnya. 
+Hubungan Git dengan CI/CD
+
+Build tools atau CI/CD tools memerlukan suatu mekanisme untuk mengetahui perubahan dari git server. Ada beberapa mekanisme yang sering digunakan, salah satunya melalui webhook dan pooling (cron).
+
+dos:53946c37dcad969796224ae0d4a71e6d20230727094918.jpeg
+
+Webhook terjadi saat ada perubahan dari git server dan kemudian mengirimkan pesan kepada build tools mengenai kejadian (event) yang terjadi pada git server tersebut. Lantas, build tools kemudian akan menanggapi sesuai dengan event yang dikirimkan. Contohnya, saat Developer melakukan commit, git server akan mengirimkan webhook ke build tools yang kemudian akan memulai proses build, test, dan deploy aplikasi.
+
+Selain melalui webhook, build tools juga dapat melakukan pooling sehingga build tools inilah yang secara aktif membandingkan/melihat perubahan yang terjadi pada git server.
+
+
+Berkenalan dengan React App
+
+React App adalah aplikasi web sederhana yang menampilkan halaman web dengan konten “Welcome to React” disertai dengan test (pengujian) untuk memeriksa apakah aplikasi me-render tampilan dengan baik. Selain itu, aplikasi ini akan menggunakan Node.js sebagai JavaScript runtime environment dan npm sebagai package manager.
+
+Sebagaimana yang tadi sudah disebutkan, aplikasi React App akan berjalan di lokal. Tools yang akan kita pakai selama berinteraksi dengan React App (sekalian mengikuti alur CI/CD) adalah sebagai berikut.
+
+    Code: Visual Studio Code sebagai Code Editor dan GitHub sebagai Git hosting platform (source control version management).
+
+    Build dan Test: Jenkins sebagai tools untuk build automation, automated testing, sekaligus CI pipeline (meski bisa dimanfaatkan untuk keseluruhan proses pada CI/CD pipeline, modul ini hanya akan fokus untuk membuat CI pipeline).
+
+Masing-masing tools akan dibahas lebih detail di materi berikutnya. Namun, masih ada satu tahapan yang kurang, yaitu kita belum mendefinisikan tools untuk tahapan Plan. 
+Tahapan Plan di React App
+
+Saat kita berbicara mengenai tahapan Plan, akan erat kaitannya dengan project management tools. Ada banyak tools yang tersedia dan Anda bisa pilih sesuai kebutuhan.
+
+Salah satu yang populer dan sering dipakai untuk software development adalah Jira Software. Pasalnya, tools ini memang ditujukan untuk Agile project management yang mana mendukung dan selaras dengan prinsip-prinsip DevOps. Dengan tools tersebut, Anda bisa memanfaatkan pendekatan Agile, melalui implementasi Scrum framework dengan membuat sprint, penggunaan Kanban framework untuk membuat kanban board, dan lain sebagainya.
+
+Silakan pelajari dan pahami lebih dalam tentang Agile secara lengkap dan detail di halaman berikut ini.
+
+
+Continuous Integration dengan GitHub dan Jenkins
+
+Secara umum, continuous integration memiliki alur mulai dari Plan, Code, Build, hingga Test. Untuk tahapan Plan, kita sudah membahas tools yang digunakan–yakni salah satunya dengan Jira Software–sekaligus mengenal kriteria dari aplikasi React App. Akan tetapi, kita belum dalami bagian Code, Build, dan Test. 
+
+Kita baru menyebutkan bahwa untuk tahapan Code, tools yang dipakai di kelas ini adalah Visual Studio Code sebagai Code Editor dan GitHub sebagai Git hosting platform. Sementara itu, untuk fase Build dan Test, kita akan menggunakan Jenkins sebagai tools untuk build automation, automated testing, sekaligus CI pipeline.
+
+Nah, sebelum praktik menggunakan tools-tools tersebut, di modul ini kita akan bahas masing-masing tools secara lebih mendalam. Mari kita mulai.
+GitHub
+
+GitHub adalah perusahaan yang menawarkan layanan Git repository hosting berbasis cloud. GitHub membuat para pengguna baik individu maupun tim menjadi lebih mudah untuk menggunakan git dalam mengontrol versi suatu pekerjaan (kode pemrograman, dokumen, dsb) saat melakukan kolaborasi dalam atau antar tim.
+Jenkins
+
+Jenkins adalah tools otomatisasi open source yang dapat digunakan untuk mengotomatisasi semua jenis pekerjaan terkait building, testing, dan delivering/deploying perangkat lunak. 
+
+Jenkins dapat diinstal di berbagai sistem operasi (Windows, Linux, macOS, FreeBSD, dll) melalui native package, Docker, Kubernetes, atau dijalankan secara mandiri (standalone) oleh mesin apa pun dengan WAR (Web application Archive) files.
+
+
+Berkenalan dengan Trivia App
+
+Karena kita sudah menyelesaikan proyek React App, selanjutnya kita akan fokus berkenalan dengan Trivia App.
+
+Ada yang berbeda dengan proyek Trivia App ini. Bila sebelumnya kita berlatih di local environment (komputer pribadi) dengan tools open source seperti Jenkins, kali ini kita akan menggunakan cloud provider ternama, yakni Amazon Web Services alias AWS.
+
+Sebagaimana namanya, Trivia App adalah sebuah aplikasi permainan/kuis trivia yang akan memberikan 10 pertanyaan menarik. Pertanyaan yang disajikan adalah seputar ilmu geografi sederhana, yakni berkenaan dengan nama ibu kota dari suatu negara. Simpel nan mengasyikkan, bukan?
+
+
+Continuous Integration di AWS
+
+Fokus dari materi kali ini adalah membahas tools-tools yang akan kita pakai untuk membuat CI pipeline menggunakan beberapa layanan AWS, terutama untuk bagian Code, Build, dan Test.
+
+Berikut beberapa layanan AWS yang akan digunakan untuk membuat CI Pipeline di kelas ini.
+
+    Code: AWS Cloud9 sebagai cloud-based IDE dan AWS CodeCommit sebagai managed source control service untuk meng-hosting (menyimpan dan mengelola) private Git repositories.
+
+    Build dan Test: AWS CodeBuild sebagai fully managed build service untuk meng-compile source code, menjalankan test, dan memproduksi software packages. 
+
+    CI Pipeline: AWS CodePipeline sebagai fully managed CI/CD Pipeline service untuk membantu mengotomatiskan proses continuous integration dan continuous delivery/deployment aplikasi (meski bisa dimanfaatkan untuk keseluruhan proses pada CI/CD pipeline, modul ini hanya akan fokus untuk membuat CI pipeline).
+
+Supaya lebih jelas, mari kita bahas setiap layanan satu per satu berdasarkan kategorinya, yakni Code, Build, dan Test.
+
+
+Continuous Integration di AWS: Code
+
+Apabila pada proyek React App kita memakai Visual Studio Code dan GitHub, untuk proyek Trivia App di AWS, kita akan menggunakan AWS Cloud9 dan AWS CodeCommit.
+AWS Cloud9
+
+Pada dasarnya, AWS Cloud9 adalah sebuah IDE atau integrated development environment berbasis cloud (bisa diakses kapan saja dan di mana saja melalui web browser). AWS Cloud9 membuat kolaborasi menjadi mudah. Anda dapat membagikan environment dengan orang lain untuk memungkinkan pair programming. Dengan begitu, anggota tim dapat saling melihat isi kode dan bersamaan melakukan coding secara real time. 
+
+AWS Cloud9 sangat terintegrasi dengan AWS CodeCommit (mengingat keduanya adalah sama-sama layanan dari AWS) sehingga semakin memudahkan pekerjaan Developer.
+AWS CodeCommit
+
+AWS CodeCommit adalah managed source control service (atau bisa juga disebut version control service) yang dapat digunakan untuk meng-hosting (menyimpan dan mengelola) private git repository (repository yang bersifat private). Kerennya, AWS CodeCommit mendukung semua fungsi standar yang ada pada git. Jadi, bila Anda familier dengan git repository, niscaya Anda juga akan terbiasa dengan AWS CodeCommit. 
+
+Semoga Anda sudah paham dengan tools yang akan kita gunakan pada tahapan Code dari alur CI/CD aplikasi Trivia App.
+
+
+Continuous Integration di AWS: Build
+
+Kita tahu bahwa proses dari build adalah mengambil kode (pull the code), mengompilasinya (compiling), dan menginstal dependencies package dari repository (seperti npm modules atau Java Maven artifact). Output dari proses build akan menjadi sebuah packaged artifact yang siap untuk deployment, bisa jadi Linux RPM package, Java WAR file, Docker image, Windows MSI installer, atau banyak lainnya. Package tersebut kemudian dapat diteruskan ke proses deployment untuk meluncurkan pembaruan aplikasi. 
+
+Proses build umumnya juga menyertakan automated testing (pengujian otomatis) untuk memeriksa kualitas kode dan memastikan bahwa kode berjalan sesuai harapan, salah satunya adalah melalui unit test. Kita akan berbicara lebih banyak soal pengujian (test) nanti. 
+
+Di AWS, terdapat layanan yang dapat membantu kita dalam urusan build sehingga memungkinkan continuous integration, ia adalah AWS CodeBuild. Layanan ini memungkinkan kita untuk meng-compile kode, menjalankan test, dan membuat deployment packages.
+
+AWS CodeBuild adalah sebuah service alias layanan. Tak seperti mengelola proses build sendiri di local development environment, AWS CodeBuild memiliki skalabilitas yang baik sehingga dapat menjalankan beberapa proses build sekaligus. Itu artinya, ia tak akan membiarkan proses build Anda dalam antrean.
+
+
+Continuous Integration di AWS: Test
+
+Jika kita ingin menerapkan CI/CD, jangan lupakan tentang testing (pengujian). Testing perlu diterapkan di berbagai tahapan dalam proses pengembangan aplikasi untuk menciptakan measure of quality (mengukur kualitas kode) pada setiap aspek aplikasi.
+
+Ada beberapa jenis pengujian yang bisa Anda praktikkan, seperti regression test, integration test, dan unit test.
+
+    Regression test: Jenis pengujian yang memeriksa/menguji setiap komponen aplikasi yang ada tidak rusak dengan adanya perubahan atau fitur baru. Misalnya, ketika Anda menambahkan fitur pembelian, pastikan bahwa fitur riwayat stok tidak bermasalah.
+
+    Integration test: Jenis pengujian ini menguji beberapa modul yang saling berkaitan. Misal pada Trivia App, apakah permain berhasil berjalan? Apakah aplikasi dapat menampilkan jumlah pemain dengan benar? Apakah pertanyaan dikirim ke setiap pemain? Apakah skor dihitung dengan tepat? Semua rangkaian aspek-aspek tersebut diuji dalam satu kesatuan.
+
+    Unit test: Jenis pengujian ini menguji fungsionalitas secara terpisah (satu unit, bukan menjadi satu kesatuan). Misal pada Trivia App, apakah skor dihitung dengan tepat?
+
+Semoga kini Anda sudah paham ya soal testing.
+
+
+Continuous Integration di AWS: CI Pipeline
+
+Setiap fase (Code, Build, dan Test) yang kita lakukan pada Trivia App masih manual. Lantas, bagaimana jika kita ingin menjalankan semuanya secara otomatis setiap kali commit kode? Jelas bahwa automasi diperlukan supaya kita bisa selalu menerima feedback (umpan balik) secara langsung yang menyatakan bahwa kode yang di-commit berfungsi dengan baik (kunci dari CI/CD).
+
+Idealnya, kita memerlukan semacam workflow (alur kerja) sekaligus orchestrator (pengatur) yang dapat mengontrol setiap tahapan pada proses pengembangan aplikasi alias pipeline. Sebenarnya, ada banyak layanan yang dapat digunakan untuk mengatur langkah-langkah pada pipeline, tetapi yang akan kita bicarakan saat ini adalah AWS CodePipeline. 
+
+AWS CodePipeline memungkinkan kita untuk membuat serangkaian langkah atau tahapan untuk mengimplementasikan CI/CD Pipeline. Dalam kasus Trivia App, kita ingin agar setiap kali Developer meng-commit perubahan kode ke repository akan secara otomatis memulai tahapan lain, yakni menjalankan test. 
+
+AWS CodePipeline tidak melakukan semua ini sendirian. Seperti yang tadi disebutkan, ia adalah sebuah orchestrator. AWS CodePipeline bekerja sama dengan layanan AWS lain, seperti AWS CodeCommit (Code), AWS CodeBuild (Build & Test), dan AWS CodeDeploy (Deploy–nanti kita bahas) untuk menciptakan sebuah CI/CD Pipeline yang harmoni.
+
+Menggunakan orchestrator seperti AWS CodePipeline penting bagi Anda yang ingin menerapkan DevOps. Musabab, ia dapat meningkatkan kecepatan dan kualitas pada pembaruan atau fitur aplikasi yang dikirim ke pengguna.
+
+==================================
+secara garis besar, proses deployment sebetulnya adalah sesederhana memindahkan kode dari satu environment (development atau staging/testing) ke environment lainnya (production)
+
+Strategi Deployment
+
+In-Place atau Replacement
+Teknik dari strategi ini adalah melakukan deployment hanya dalam beberapa langkah sederhana. Pertama, kita terminate (menghentikan) proses untuk aplikasi A versi 1. Kemudian, kita deploy versi 2 ke server yang sama
+Kekurangan dari pendekatan ini adalah adanya downtime (waktu henti) ketika menghentikan aplikasi dan proses deploy versi baru. Keuntungannya, strategi ini sederhana dan cukup mudah untuk dipelajari. 
+
+Recreate
+dengan mematikan atau shut down (semua) instance alias server untuk aplikasi A versi 1 (sehingga versi 1 tidak bisa diakses), kemudian deploy versi 2 di (semua) instance yang baru. Nah, perbedaannya dengan strategi sebelumnya adalah Recreate menggunakan instance baru, sedangkan in-place/replacement menggunakan instance yang sama.
+
+Untuk mempermudah penerapan strategi recreate, kita juga bisa menggunakan load balancer (sistem yang bertugas mendistribusikan network traffic yang masuk ke sekelompok instance). Jadi, setelah deploy versi 2, kita tinggal hubungkan (semua) instance baru tersebut pada load balancer. 
+
+Keuntungan dari menerapkan strategi ini adalah langkah-langkahnya yang sederhana dan cukup mudah untuk dipelajari. Namun, ia memiliki kekurangan, yakni adanya downtime (waktu henti) ketika menghentikan aplikasi dan proses deploy versi baru.Gunakan strategi ini jika aplikasi Anda tidak memiliki masalah dengan downtime
+
+Ramped atau Rolling Release
+merilis aplikasi secara perlahan dengan mengganti instance satu demi satu.
+
+-Deploy versi 2 terlebih dahulu ke satu instance baru.
+-register (tambahkan) instance baru tersebut ke load balancer.
+-Kemudian, satu instance versi 1 di-deregister (dikeluarkan) dari load balancer dan di-shut down (dimatikan).
+-Setelah itu, ulangi langkah-langkah tersebut ke instance yang lain.
+Keuntungan menggunakan strategi ramped ini adalah takkan terjadi downtime. Namun, kekurangannya adalah ia sedikit lebih kompleks ketimbang Recreate.
+
+Blue/Green
+ versi 2 (green) di-deploy beriringan dengan versi 1 (blue) dengan jumlah instance yang persis sama. Setelah instance untuk versi 2 siap menerima traffic, kita alihkan traffic dari versi 1 ke versi 2 pada load balancer.
+Keuntungan menggunakan strategi ini adalah dapat rollback (kembali ke versi sebelumnya) secara instan, yakni cukup alihkan traffic dari versi 2 ke versi 1 kembali. Untuk kepentingan rollback, biasanya versi 1 (blue environment) takkan dihapus untuk sementara waktu hingga versi 2 (green environment) benar-benar aman tanpa bug. Akan tetapi, kekurangannya adalah akan memakan biaya karena kita perlu menggandakan jumlah instance.
+
+Canary
+ dengan secara bertahap mengalihkan traffic dari versi 1 ke versi 2. Umumnya, traffic dibagi berdasarkan bobot. Sebagai contoh, 90% request masuk ke versi 1 dan 10% ke versi 2. Teknik ini sebagian besar digunakan jika pengujian kurang maksimal/komprehensif atau jika tim masih merasa kurang percaya diri soal stabilitas aplikasi dan/atau infrastruktur.
+Beberapa keuntungan dalam menggunakan strategi canary adalah kita bisa mengatur rilis versi hanya untuk sebagian porsi pengguna, cepat untuk proses rollback, dan cocok untuk memantau performa. Salah satu kekurangan dari strategi ini adalah proses rilis yang lambat
+
+A/B Testing
+A/B Testing bekerja dengan cara merutekan sebagian pengguna ke fungsionalitas baru dalam kondisi tertentu. Strategi ini biasanya dipakai sebagai teknik untuk membuat keputusan bisnis berdasarkan statistik. A/B Testing banyak digunakan untuk menguji konversi fitur tertentu dan nantinya fitur yang dirilis adalah yang paling banyak konversinya.
+Keuntungan dalam menerapkan A/B Testing adalah Anda bisa memiliki beberapa versi aplikasi yang berjalan secara paralel dan memiliki kontrol penuh atas distribusi traffic untuk aplikasi. Namun, beberapa kekurangannya adalah memerlukan load balancer yang cerdas, sulit untuk mengatasi eror di beberapa sesi, dan wajib melakukan pelacakan untuk setiap versi.
+============================
+Continuous Deployment di AWS
+
+Amazon Elastic Compute Cloud (Amazon EC2) adalah layanan yang masuk dalam kategori Infrastructure as a Service (IaaS) yang menyediakan kapasitas komputasi yang scalable (dapat disesuaikan kapasitasnya) dengan harga pay-as-you-go. Karena termasuk IaaS, itu berarti Anda bisa menggunakan Amazon EC2 dengan kontrol penuh layaknya komputer atau server pribadi. 
+
+AWS Elastic Beanstalk tergolong dalam kategori Platform as a Service yang berarti kita disediakan sebuah environment untuk aplikasi tanpa perlu mengurusi soal server atau infrastruktur yang mendasarinya. Dengan ini, Developer bisa lebih fokus dalam pengembangan aplikasi ketimbang berkutat dengan server. merupakan Infrastructure-as-a-Service (yang mana kita diberikan akses penuh ke server)
+
+AWS CodeDeploy adalah layanan yang mampu mengotomatiskan proses deployment aplikasi ke Amazon EC2 instance (server virtual di AWS), on-premise instance (server pribadi), AWS Lambda function (serverless computing), atau Amazon ECS service (layanan container di AWS). 
+AWS CodeDeploy merupakan layanan yang terintegrasi dengan AWS CodePipeline sehingga kita bisa menggunakan AWS CodeDeploy bersamaan dengan layanan lain, seperti AWS CodeCommit dan AWS CodeBuild.
+
+Untuk bekerja dengan AWS CodeDeploy, hal yang perlu kita lakukan adalah membuat application dan deployment group. Mari kita bahas apa arti dari kedua istilah tersebut.
+Application: sebuah application dapat memiliki satu atau beberapa deployment group.
+Application name: nama aplikasi sebagai identitas pada AWS CodeDeploy.
+Compute platform: mendefinisikan platform komputasi yang akan digunakan. Beberapa opsi platform yang didukung ialah EC2/on-premises, Lambda, dan ECS.
+Deployment group: Ini berisi pengaturan dan konfigurasi yang digunakan selama deployment. 
+IAM role: Service role yang akan digunakan CodeDeploy untuk mengautentikasi ke layanan lain.
+Deployment type: Untuk strategi deployment, Anda bisa pilih In-Place (memperbarui instance dengan versi aplikasi yang baru) atau Blue/Green (mengganti instance lama dengan instance yang baru dan deploy versi aplikasi baru ke instance baru tersebut). 
+Environment configuration: Cara untuk menentukan instance. Untuk In-Place, bisa dengan Amazon EC2 Auto Scaling groups, Amazon EC2 instances tag group, atau bahkan On-premises instances tag group
+Deployment configuration: Sesuai namanya, yakni konfigurasi yang diperlukan untuk deployment. Untuk In-Place, Anda bisa mengontrol seberapa cepat sebuah aplikasi akan di-deploy
+Load balancer: Secara opsional, Anda dapat memilih load balancer sehingga CodeDeploy tahu di mana harus register dan deregister instances selama deployment.
+Triggers: Anda bisa membuat sebuah trigger agar menerima notifikasi jika sesuatu terjadi terkait deployment dan instance, entah itu Deployment starts, Deployment succeeds, Deployment fails, Instance start, Instance fails, dan masih banyak lainnya.
+Alarms: Anda bisa mengasosiasikan CloudWatch alarms. Deployment dapat dihentikan apabila CloudWatch alarms terpicu.
+Rollbacks: Konfigurasi untuk rollback. Anda bisa melakukan rollback secara otomatis jika terjadi deployment fails dan/atau saat alarm terpicu.
+=====================
+Infrastructure Provisioning
+Infrastructure provisioning adalah suatu proses pembuatan infrastruktur dengan meminimalkan intervensi manusia untuk mengontrol hardware, software, network, OS, data storage, dan komponen lainnya yang digunakan oleh aplikasi atau layanan teknologi informasi.yakni Terraform dan AWS CloudFormation.
+
+Terraform adalah IaC tool dari HashiCorp yang memungkinkan Anda untuk membuat, mengubah, dan mengelola infrastruktur dengan aman dan efisien menggunakan berkas konfigurasi yang bisa Anda taruh di version control system, gunakan kembali, dan bagikan ke tim. Terraform dapat mengelola low-level component, seperti compute, storage, dan network; serta high-level component DNS entries dan SaaS features.
+
+Saat menggunakan Terraform, ada 3 tahapan workflow (alur kerja)
+-write : Definisikan resource yang Anda inginkan. Misalnya, Anda dapat membuat konfigurasi untuk deploy sebuah aplikasi pada virtual machine (VM) di suatu virtual private cloud (VPC) dengan aturan firewall dan satu load balancer
+-plan : Terraform membuat rencana eksekusi yang menjelaskan apa saja infrastruktur yang akan dibuat, diperbarui, atau dihapus berdasarkan infrastruktur yang ada dan konfigurasi Anda.
+-apply : Bila disetujui, Terraform akan melakukan operasi dalam urutan yang sesuai. Misalnya, jika Anda memperbarui properti pada VPC dan mengubah jumlah VM di VPC tersebut, Terraform akan membuat ulang VPC sebelum menyesuaikan kapasitas VM.
+
+https://developer.hashicorp.com/terraform/docs
+
+AWS CloudFormation
+ layanan yang memungkinkan Anda untuk mendeklarasikan infrastruktur dalam sebuah berkas teks. Dalam berkas tersebut, Anda bisa mendefinisikan infrastruktur apa pun yang diinginkan dalam format JSON atau YAML. Setelah selesai dengan berkas tersebut, cukup kirimkan ke AWS CloudFormation untuk dibuatkan infrastruktur/environment sesuai dengan yang Anda definisikan. 
+
+AWS Cloud Development Kit alias AWS CDK adalah sebuah lapisan abstraksi untuk IaC yang menyediakan framework (kerangka kerja) yang dapat Anda gunakan untuk merancang infrastruktur cloud dalam baris kode menggunakan berbagai bahasa pemrograman pilihan.
+berikut adalah contoh manfaat lainnya apabila Anda menggunakan AWS CDK.
+-Onboarding cloud lebih mudah
+-Proses pengembangan lebih cepat
+-Dapat disesuaikan dan dibagikan
+-Tanpa pengalihan konteks
+
+AWS Serverless Application Model (AWS SAM) yang merupakan sebuah open source framework yang dapat Anda gunakan sebagai kerangka untuk membuat dan mengatur serverless application di AWS.
+Yang dimaksud dengan serverless application di sini adalah ketika Anda membuat suatu aplikasi dengan kombinasi Lambda function, event source, dan resource lainnya yang bekerja sama untuk melakukan sebuah tugas.  
+
+AWS SAM template specification adalah perpanjangan atau extension dari AWS CloudFormation template dengan beberapa komponen tambahan yang membuatnya lebih mudah untuk bekerja dengan serverless.
+
+AWS SAM command line interface (AWS SAM CLI)
+AWS SAM CLI menyediakan berbagai perintah yang memungkinkan Anda untuk memverifikasi bahwa berkas AWS SAM template ditulis sesuai dengan spesifikasi, memanggil Lambda function secara lokal, membuat sebuah deployment package, deploy serverless application ke AWS Cloud, dan banyak lainnya.
+-----------
+CI continuos integration(plan,code, build,test)
+CD continuos delivery(release,deploy,)
+Apa perbedaan antara Continuous Delivery dan Continuous Deployment?
+-Continuous Delivery memiliki tahapan manual approval, sedangkan Continuous Deployment tidak.
+Manakah pernyataan yang SALAH terkait topik Infrastructure as Code?
+-Gagasan untuk memperlakukan infrastruktur sebagai kode bukanlah prinsip dasar dari DevOps.
+Berikut adalah beberapa strategi deployment, kecuali ...-Placement
+AWS Elastic Beanstalk termasuk dalam kategori layanan -platform
+=======================================
+Chef merupakan perusahaan yang bergerak di bidang automasi/otomatisasi. Sejak didirikan pada tahun 2008, Chef sukses menyatukan Developer dan System Administrator (IT Operations) melalui produk ternamanya, Chef Infra.
+
+Chef Infra adalah platform automasi canggih yang mengubah infrastruktur menjadi kode. Baik Anda beroperasi di cloud, lokal, atau keduanya, Chef Infra mengotomatiskan cara infrastruktur dikonfigurasi, di-deploy, dan dikelola. Diagram ini menunjukkan bagaimana Anda mengembangkan, menguji, dan men-deploy kode Chef Infra.
+Chef Workstation (lokasi di mana pengguna berinteraksi dengan Chef yang berjalan pada komputer yang Anda pakai sehari-hari) untuk menulis kode, kemudian mengunggahnya ke Chef Server (bertindak sebagai pusat untuk data konfigurasi). Setelah itu, Anda bisa mengonfigurasi node (client) dengan Chef Clients
+
+Chef Habitat menawarkan pendekatan baru untuk deploy aplikasi yang disebut dengan application automation (otomatisasi aplikasi). Application deployment berarti bahwa sistem automasi dikemas bersama dengan aplikasi, tak peduli di mana pun aplikasi itu akan di-deploy.
+
+Chef InSpec merupakan testing framework open source untuk menentukan persyaratan compliance (kepatuhan/ketentuan), security (keamanan), dan policy (kebijakan).
+
+Chef Automate menyediakan rangkaian lengkap kemampuan terkait visibility (visibilitas) dan compliance (kepatuhan/ketentuan) untuk node/client. Chef Automate terintegrasi dengan produk open-source seperti Chef Infra Client, Chef InSpec, dan Chef Habitat.
+
+https://docs.chef.io/
+
+
+Puppet adalah tools yang membantu Anda untuk mengelola dan mengotomatiskan konfigurasi server. Saat menggunakan Puppet, Anda menentukan desired state (kondisi yang diinginkan) dalam infrastruktur yang Anda kelola. Hal ini dilakukan dengan menulis kode dalam Puppet Domain-Specific Language (DSL) alias Puppet code yang dapat Anda gunakan dengan beragam perangkat dan sistem operasi. 
+Puppet code bersifat deklaratif (sudah kita bahas pada materi Infrastructure as Code)
+ Puppet primary server adalah server penyimpan kode yang menentukan desired state, sedangkan Puppet agent menerjemahkan kode Anda ke dalam perintah dan kemudian mengeksekusinya pada sistem yang ditentukan, disebut sebagai sebuah Puppet run.
+
+https://puppet.com/docs/puppet/7/puppet_index.html
+
+
+Ansible merupakan tools untuk IT automation yang dapat mengonfigurasi sistem, men-deploy perangkat lunak, hingga mengatur tugas-tugas IT yang lebih canggih seperti continuous deployment atau rolling update (pembaruan bergulir) tanpa henti. 
+Tujuan utama Ansible adalah kesederhanaan dan kemudahan menggunakan bahasa yang mudah dimengerti oleh manusia tanpa mengurangi fokus pada keamanan dan keandalan. 
+
+Ansible memiliki tiga komponen
+Control node : Sebuah sistem tempat di mana Ansible diinstal. Di sini, Anda bisa menjalankan berbagai Ansible commands seperti ansible atau ansible-inventory.
+Managed node : Ini adalah sistem jarak jauh (remote system), atau host yang dikontrol oleh Ansible.
+Inventory : Daftar managed node yang dikontrol oleh Ansible. Anda perlu membuat sebuah Inventory pada Control Node untuk mendeskripsikan host deployment (managed node) yang akan dikontrol oleh Ansible.
+
+https://docs.ansible.com/ansible/latest/index.html
+
+
+AWS OpsWorks adalah layanan configuration management yang dapat membantu Anda untuk mengonfigurasi dan mengoperasikan aplikasi menggunakan Puppet atau Chef.
+AWS OpsWorks menawarkan beberapa opsi, di antaranya adalah AWS Opsworks Stacks, AWS OpsWorks for Chef Automate, dan AWS Opsworks for Puppet Enterprise. 
+AWS Opsworks Stacks dan AWS Opsworks for Chef Automate memungkinkan Anda untuk menggunakan Chef cookbooks dan berbagai solusinya untuk mengelola konfigurasi, sementara AWS OpsWorks for Puppet Enterprise memudahkan Anda untuk mengonfigurasi Puppet Enterprise master server di AWS. 
+
+AWS OpsWorks Stacks adalah layanan manajemen konfigurasi dari Amazon Web Services (AWS) yang membantu mengelola aplikasi dan server, baik di AWS maupun di lingkungan lokal (on-premises). Layanan ini menggunakan alat otomatisasi seperti Chef untuk mengatur, mengonfigurasi, dan menerapkan aplikasi dengan lebih efisien.
+
+AWS OpsWorks for Chef Automate adalah layanan terkelola dari Amazon Web Services (AWS) yang menyediakan lingkungan Chef Automate untuk mengelola konfigurasi dan kepatuhan server secara otomatis, baik di AWS maupun di lingkungan on-premises. Layanan ini dirancang untuk membantu tim DevOps mengelola infrastruktur dengan lebih konsisten dan efisien.
+
+AWS OpsWorks for Puppet Enterprise memungkinkan Anda untuk membuat AWS-managed Puppet master server. Puppet master server bertugas untuk mengelola node, menyimpan facts (informasi sistem) terkait node tersebut, dan menjadi central repository untuk Puppet modules. Modules adalah unit dari Puppet kode yang berisi instruksi tentang bagaimana infrastruktur Anda harus dikonfigurasi. Anda dapat mengunduh community modules dari Puppet Forge atau menggunakan Puppet Development Kit untuk membuat custom modules Anda sendiri, lalu mengelola deployment-nya dengan Puppet Code Manager.
+
+Mengontrol Infrastruktur dengan AWS Systems Manager
+AWS Systems Manager sejatinya adalah kumpulan tools yang dapat membantu Anda untuk mengelola atau mengontrol aplikasi dan infrastruktur yang berjalan di AWS Cloud. Layanan ini mampu menyederhanakan manajemen aplikasi dan AWS resources, mempersingkat waktu untuk mendeteksi dan menyelesaikan masalah operasional, serta membantu mengelola AWS resources dengan aman dalam skala besar. menjaga security (keamanan) dan compliance (kepatuhan) dengan memindai instance, kemudian melaporkan atau mengambil tindakan tertentu untuk setiap pelanggaran policy (kebijakan) yang terdeteksi. 
+terhubung dengan aman ke sebuah instance tanpa harus menggunakan SSH,
+melihat berkas log (yakni berkas yang berisi catatan/daftar setiap peristiwa/kejadian yang terjadi pada sistem) dari semua perintah yang dijalankan melalui CloudWatch Logs log stream, 
+membangun health dashboard untuk AWS resources yang dimiliki,
+menyimpan parameter yang digunakan oleh aplikasi dengan aman, 
+memublikasikan pesan untuk incident response (respons insiden), 
+membuat response plan (rencana respons), 
+dan bahkan memungkinkan tim untuk berinteraksi dengan chatbots atau titik eskalasi selama krisis.
+
+Operations Management
+Incident Manager adalah sebuah fitur untuk pengelolaan incident (insiden) yang membantu pengguna dalam mitigasi insiden yang memengaruhi aplikasi.
+Incident Manager meningkatkan resolusi insiden dengan memberi tahu responden tentang dampak, menyoroti data terkait pemecahan masalah yang relevan, dan menyediakan tools kolaborasi untuk membuat layanan kembali aktif dan berjalan. Incident Manager juga mengotomatiskan response plan (rencana respons) dan memungkinkan eskalasi bagi tim responden.
+
+Explorer merupakan sebuah dashboard operasi yang dapat dikustomisasi untuk mendapatkan laporan informasi tentang AWS resources. Explorer menampilkan agregat operations data (OpsData) baik untuk akun AWS Anda maupun di seluruh AWS Region. Di Explorer, OpsData menyertakan metadata tentang instance, detail terkait patch compliance, dan operational items (OpsItems).
+
+OpsCenter menyediakan lokasi terpusat agar kita bisa mengamati, menginvestigasi, dan menyelesaikan operational items (OpsItems) yang relevan dengan AWS resources. Fitur ini dirancang untuk mengurangi waktu rata-rata dalam menyelesaikan masalah yang memengaruhi AWS resources.
+
+CloudWatch dashboard adalah halaman pada CloudWatch console yang dapat Anda gunakan untuk memantau AWS resources dalam satu tampilan. Anda bisa menggunakan fitur ini untuk membuat tampilan yang memuat metrik dan alarm untuk AWS resources Anda.
+
+Application Management
+Application Manager dapat membantu Anda untuk menyelidiki dan memperbaiki masalah yang ada pada AWS resources dalam konteks application dan cluster. Dalam nomenklatur Application Manager, application adalah sebuah grup yang berisi AWS resources yang ingin Anda operasikan sebagai satu unit. Sementara itu, cluster merupakan sebuah container cluster termasuk Amazon EKS cluster dan Amazon ECS cluster.
+
+AppConfig dapat membantu Anda untuk membuat, mengelola, dan men-deploy konfigurasi aplikasi dan feature flag.
+AWS AppConfig menyimpan konfigurasi feature flag di penyimpanan konfigurasi yang di-hosting AWS AppConfig dalam format feature flag yang berisi data dan metadata tentang flag dan flag attributes.
+
+Parameter Store menyediakan penyimpanan hierarkis yang aman untuk data konfigurasi dan manajemen secrets (objek yang berisi sejumlah data sensitif). Anda dapat menyimpan data seperti password, database strings, EC2 instance ID, AMI (Amazon Machine Image) ID, serial number, serta license code sebagai parameter value. Anda dapat menyimpan value tersebut dalam bentuk teks atau data terenkripsi. Setelahnya, Anda dapat mereferensikan value menggunakan nama unik yang Anda tentukan saat membuat parameter.
+
+Change Manager adalah sebuah framework (kerangka kerja) untuk change management (manajemen perubahan) yang bisa digunakan dalam rangka meminta, menyetujui, menerapkan, dan melaporkan perubahan operasional pada konfigurasi aplikasi dan infrastruktur.
+ fitur Automation untuk mengotomatiskan tugas yang berkaitan dengan common maintenance (pemeliharaan umum) dan deployment. Banyak hal yang bisa Anda lakukan dengan Automation, antara lain membuat dan memperbarui AMI, menerapkan pembaruan untuk driver dan agent, mereset password pada Windows Server instance, mereset SSH key pada Linux instance, dan menerapkan OS patch atau pembaruan aplikasi.
+
+Change CalendarFitur ini membantu Anda dalam menentukan periode waktu (dengan mengatur rentang tanggal dan waktu) untuk mengizinkan atau memblokir tindakan perubahan konfigurasi pada AWS resources.Open by default: Mengembalikan status OPEN secara default; dan status CLOSED jika memiliki event (peristiwa) yang jatuh pada periode waktu yang diminta.Closed by default: Mengembalikan status CLOSED secara default; dan status OPEN jika memiliki event (peristiwa) selama periode waktu yang dipilih.
+
+Maintenance Windows ketika mengatur jadwal yang berulang untuk menjalankan tugas administratif seperti menginstal patch dan pembaruan tanpa mengganggu operasional bisnis.
+
+Node Management
+Compliance Gunakan fitur ini jika Anda ingin memindai sekumpulan managed node (yakni segala mesin yang dikonfigurasi untuk AWS Systems Manager, mencakup EC2 instance, edge devices, VM di cloud provider lain, dan on-premise server) untuk mengetahui patch compliance dan inkonsistensi konfigurasi.fitur Compliance menampilkan data mengenai Patch Manager patching dan State Manager associations. 
+
+Fleet Manager merupakan UI (user interface) terpadu yang membantu Anda dalam mengelola node dari jarak jauh. Dengan Fleet Manager, Anda dapat melihat status terkait health (kesehatan) dan performance (kinerja) dari seluruh fleet/armada/kumpulan node Anda melalui satu halaman. Anda juga dapat mengumpulkan data dari masing-masing perangkat dan instance untuk melakukan berbagai tugas, termasuk melihat direktori dan konten file, pengelolaan Windows registry, manajemen pengguna sistem operasi
+
+Inventory mengotomatiskan proses pengumpulan software inventory (metadata tentang aplikasi, file, komponen, patch, dan lainnya) dari managed node.
+
+ Session Manager untuk mengelola edge devices dan EC2 instance melalui shell interaktif berbasis browser atau melalui AWS CLI dengan aman tanpa perlu membuka inbound port, membuat bastion host, atau mengurus SSH keys.
+
+Run Command digunakan untuk menjalankan perintah untuk mengelola konfigurasi managed node dari jarak jauh (secara remote) dalam skala besar. Dengan fitur ini, Anda bisa memperbarui aplikasi, menyesuaikan time zone pada setiap instance, membersihkan berkas log lawas, menjalankan Linux shell script, menjalankan Windows PowerShell command, dsb., pada sekumpulan target, baik lusinan bahkan hingga ratusan managed node.
+
+State Manager berfungsi untuk menjaga managed node supaya tetap dalam status yang Anda tentukan (desired/defined state). Contohnya, Anda dapat menggunakan State Manager untuk menjamin bahwa managed node hanya menjalankan perangkat lunak tertentu, di-patch dengan software update tertentu saja, mengonfigurasi pengaturan jaringan, atau menggabungkan managed node dalam sebuah Active Directory domain.
+
+Patch Manager mengotomatiskan proses patching untuk managed node dengan pembaruan terkait keamanan dan jenis pembaruan lainnya seperti sistem operasi dan aplikasi, baik satu per satu ataupun sekumpulan managed node menggunakan tag.Patch Manager menggunakan patch baseline, yang mencakup daftar patch yang disetujui dan ditolak. Anda dapat menginstal security patch secara teratur dengan menjadwalkan patch atau on-demand (kapan saja).
+ fitur Distributor bila Anda ingin membuat dan men-deploy package ke managed node. Dengan Distributor, Anda dapat mengemas perangkat lunak Anda sendiri untuk menginstalnya pada managed node. Setelah Anda menginstal package untuk pertama kalinya, Anda dapat menggunakan Distributor untuk menghapus (uninstall) dan menginstal ulang (reinstall) versi package baru, atau menimpanya dengan berkas baru.
+Hybrid Activations  server dan VM pada on-premise sebagai managed node (untuk menciptakan hybrid environment), Anda harus melakukan aktivasi terlebih dahulu. Setelah menyelesaikan proses aktivasi, Anda akan menerima Activation Code dan Activation ID.Kombinasi dari kode dan ID ini berfungsi seperti access ID dan secret key pada EC2 instance, yakni memberikan akses yang aman ke layanan AWS Systems Manager dari managed node Anda.
+
+Shared Resources hanya memiliki satu fitur utama: Systems Manager document (SSM documents). Fitur ini mendefinisikan berbagai tindakan yang dilakukan AWS Systems Manager. SSM documents punya beberapa tipe, termasuk Command document (yang digunakan oleh State Manager dan Run Command–nanti dibahas) dan Automation runbooks (yang digunakan oleh Systems Manager Automation). 
+=================
+Monitoring merupakan komponen yang penting dalam kultur DevOps. Monitoring adalah proses untuk mengumpulkan, menggabungkan, dan menganalisis metrics, guna meningkatkan awareness terhadap sistem Anda.
+Tujuan Monitoring
+Time to detect (TTD): Ketika isu performa atau yang lainnya timbul, diagnostik data yang kaya mengenai isu tersebut dikirim ke tim developer melalui monitoring otomatis.
+Time to mitigate (TTM): Tim DevOps bertindak berdasarkan informasi untuk memitigasi isu secepat mungkin sehingga pengguna tidak lagi terdampak. 
+Time to remediate (TTR): Waktu penyelesaian (resolution) isu yang terukur. Setelah mitigasi, tim bekerja untuk mengatasi isu hingga akar masalahnya sehingga tidak terulang kembali.
+
+ metrics adalah data yang berkaitan dengan sistem pada waktu tertentu. Metrics digunakan pada monitoring untuk mengukur sesuatu. Hal yang perlu diukur tentu saja berbeda-beda untuk setiap kasus aplikasi. Contohnya, untuk web server, Anda harus mengukur request time (waktu yang dibutuhkan untuk mengolah permintaan), sedangkan bagi database, jumlah koneksi yang aktif atau jumlah query yang dieksekusi.
+==============================
+Environment Monitoring
+Dengan memonitor environment, Anda akan mendapatkan gambaran tentang faktor-faktor yang memengaruhi performa server dalam melakukan pekerjaan.
+konsumsi memori,penggunaan CPU,ruang pada disk,jumlah I/O (input/output) untuk proses read pada disk,jumlah I/O (input/output) untuk proses write pada disk,dan hal-hal operasional lainnya yang mampu mendeteksi hambatan pada infrastruktur server.
+
+Prometheus adalah tools monitoring (pemantauan) dan alerting (peringatan) yang pada awalnya dibuat di SoundCloud. Prometheus mengumpulkan dan menyimpan metrik dalam bentuk data time series (deret waktu), yang berarti informasi metrik disimpan dari waktu ke waktu dengan pemberian timestamp (stempel waktu) dan (opsional) label. 
+
+Prometheus menawarkan banyak fitur menarik, di antaranya:
+Model data multidimensi dengan data time series yang diidentifikasi melalui nama metric dan key-value pair (pasangan kunci-nilai).
+PromQL, sebuah bahasa query yang fleksibel untuk mengolah data.
+Tidak bergantung pada distributed storage (penyimpanan yang terdistribusi); single server node (instance server tunggal) bersifat otonom.
+Pengumpulan data time series dilakukan menggunakan pull model (Prometheus mengambil data dari endpoint yang Anda tentukan) melalui HTTP.
+Memungkinkan short-lived jobs (misal, batch jobs) untuk push (mengirim) data time series ke perantara, yang kemudian diambil oleh Prometheus menggunakan Pushgateway (nanti dibahas).
+Targets (server atau aplikasi tujuan) dapat ditemukan melalui service discovery atau static configuration (konfigurasi statis).
+Dukungan beberapa mode grafik dan dashboard.
+Visualisasi data melalui tools seperti Grafana (kita bahas soal ini nanti).
+
+ekosistem yang terdiri dari beberapa komponen (sebagian opsional), yaitu
+-Prometheus server, yakni komponen utama yang scrape (mengeruk/mengambil) dan store (menyimpan) data time series.
+-Client libraries, untuk memperalati kode aplikasi, biasanya bertujuan membuat custom metrics yang spesifik terkait aplikasi.
+-Push gateway, yang memungkinkan short-lived jobs (misal, batch jobs) untuk mengekspos metrics ke Prometheus. Jadi, karena batch jobs biasanya berumur pendek (misal, sering terhenti atau terhapus), Prometheus tak memiliki cukup waktu untuk mengambil data darinya. Dengan begitu, batch jobs dapat push (mengirim) metrics ke Pushgateway, lalu Pushgateway kemudian mengekspos metrics tersebut ke Prometheus. Itulah mengapa Pushgateway terkadang disebut sebagai metrics cache, bukan tools untuk mengubah Prometheus menjadi berbasis push model (yakni ketika service mengirim metrics langsung ke Prometheus).
+-Exporter, agar memungkinkan sistem third-party mengekspor metrics mereka menjadi Prometheus metrics (kita bahas lebih dalam nanti). 
+-AlertManager, bertugas untuk menangani alerts (peringatan).
+
+Node/system metrics exporter alias node_exporter. Exporter ini memproduksi metrics terkait infrastruktur
+-penggunaan CPU,konsumsi memory,ruang disk saat ini,jumlah I/O (input/output) untuk proses read pada disk,waktu aktif server,hingga beban rata-rata server.
+---------
+Amazon CloudWatch
+Amazon CloudWatch adalah serangkaian tools untuk memantau AWS resources dan aplikasi. Layanan ini memberikan kita kemampuan untuk melihat masalah yang terjadi pada infrastruktur dan bahkan memberi tahu ketika ada sesuatu yang tidak beres. Komponen inti dari Amazon CloudWatch adalah CloudWatch metrics, CloudWatch alarms, dan CloudWatch logs
+
+-CloudWatch metrics merupakan data berkaitan dengan sistem yang dikumpulkan dari waktu ke waktu. Kerennya, sebagian besar AWS resources mengirim metrics ke CloudWatch secara otomatis seperti EC2 instance, Amazon SQS, Elastic Load Balancing, Amazon RDS, Amazon API Gateway, AWS Lambda, AWS CodeBuild, dan banyak lagi.
+-CloudWatch alarms, Anda dapat menentukan alarm atau peringatan yang kemudian memicu tindakan lain jika ada sesuatu yang tidak beres pada environment. Alarm ini akan aktif ketika nilai dari metrics mencapai ambang batas (threshold) tertentu dalam suatu periode waktu. Fitur anomaly detection menggunakan algoritma machine learning yang akan terus-menerus menganalisis metrics dari sistem dan aplikasi, menentukan batas dasar normal, dan menentukan anomali.
+- CloudWatch logs memungkinkan Anda untuk memusatkan berkas log dari semua sistem, aplikasi, dan apa pun yang Anda inginkan.
