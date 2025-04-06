@@ -8,9 +8,11 @@ docker container stop mongoserver1 #stop container
 docker cp index.html web-fi:/usr/share/nginx/html (container name and path)
 
 #remove
+docker remove container = docker rm #containerid# // remove images =docker rmi #imgid#
 docker container rm mongoserver1 #remove container
 docker rmi imagesid *exp docker rmi *abced233
 docker rm -f names *force remove
+docker rm -v my_container  # Volume dihapus bersamaan dengan container
 
 #port
 docker run -itd --name web01 -p 8080:80 nginx (default port is 80 and 8080 for access)
@@ -24,6 +26,7 @@ docker network create jenkins #create docker network name jenkins
 docker rename *exp docker rename eager_02 ubuntu_01 (dari eager_02 ke ubuntu_01)
 
 #run-execute
+apt-get update && apt-get install nano
 docker exec -it *exp docker exec -it container id /bin/bash
 docker run -itd ubuntu
 
@@ -48,6 +51,8 @@ docker push raakfp/simple-apps
 
 
 #docker compose
+
+cek = docker compose version
 
 file bernama docker-compose.yml
 services:
