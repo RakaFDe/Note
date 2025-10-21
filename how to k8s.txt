@@ -1,0 +1,78 @@
+Service pada k8s
+Pod	Unit terkecil yang menjalankan satu atau lebih container.
+Service	Abstraksi jaringan untuk mengekspos pod. Bisa ClusterIP, NodePort, LoadBalancer, atau ExternalName.
+Deployment	Mengatur dan mengelola replica pod serta update-nya secara deklaratif.
+ReplicaSet	Mengatur jumlah replika pod yang harus berjalan (digunakan oleh Deployment).
+Namespace	Untuk memisahkan resource dalam cluster agar lebih terorganisir.
+Volume	Penyimpanan yang ter-mount ke pod (misalnya emptyDir, hostPath, persistentVolumeClaim, dll).
+ConfigMap	Menyimpan konfigurasi non-rahasia dalam bentuk key-value.
+Secret	Menyimpan data sensitif seperti password, token, API key.
+Node	Representasi dari server (fisik/VM) tempat pod dijalankan.
+
+Storage
+PersistentVolume (PV)	Abstraksi penyimpanan yang disediakan oleh admin cluster.
+PersistentVolumeClaim (PVC)	Klaim penyimpanan oleh user/aplikasi.
+StorageClass	Menentukan tipe storage dinamis yang akan dibuat secara otomatis oleh PVC.
+
+Advance
+StatefulSet	Untuk aplikasi stateful seperti database (memberikan identitas tetap dan volume persistensi).
+DaemonSet	Memastikan satu pod berjalan di setiap node (sering digunakan untuk logging, monitoring agent).
+Job	Menjalankan tugas satu kali (batch).
+CronJob	Menjadwalkan job untuk berjalan berkala seperti cron.
+Ingress	Mengatur akses HTTP/HTTPS ke dalam cluster (seperti reverse proxy, load balancer berbasis path/host).
+
+Observe debug
+Event	Catatan event (misalnya pod gagal dibuat, container restart, dll).
+ServiceAccount	Digunakan oleh pod untuk akses API Kubernetes.
+Role / ClusterRole & Binding	Untuk RBAC — akses kontrol.
+
+====================================================
+kubectl --help
+
+minikube status = cek status
+
+kubectl api-resources = melihat semua jenis resource
+kubectl get componentstatuses = seperti minikube status
+
+kubectl get pods = menampilkan semua pod di namespace aktif
+kubectl get pods -A = menampilkan semua pod disemua namespace
+kubectl get svc = menampilkan service
+kubectl get deployments = menampilkan deployment
+kubectl get all = menampilkan semua resource (pod,service, deployment_
+kubectl get nodes = daftar node di cluster
+kubectl get pvc = melihat daftar persistent volume claim
+
+
+kubectl describe pod <namapod> = melihat detil pada pod
+kubectl describe svc <namasvc> = melihat detil service
+kubectl get pod -o wide = melihat data informasi node dan ip [ada pod
+kubectl get pod -o yaml = melihat output yam pada pod
+kubectl logs <namapod> = melihat log pod
+kubectl logs <namapod> -c <container> = melihat pod pada container tertentu
+
+kubectl apply -f <file.yaml> = deploy/update resource file yaml
+kubectl delete -f <file.yaml> = hapus resource yaml
+kubectl delete pod <namapod> = hapus satu pod
+kubectl delete svc <namasvc> = hapus service
+kubectl delete deployment <nama> = hapus deployment
+
+kubectl create deployment <nama> --image=<image> = buat deployment 
+kubectl expose deployment <nama> --port=80 --target-port=8080 = buat service deployment
+kubectl scale deployment <nama> --replicas=3 = ubah total replica pod
+kubectl edit deployment <nama> = Edit konfigurasi langsung (dalam editor)
+
+kubectl exec -it <nama-pod> -- bash = Masuk ke dalam pod (jika image punya shell)
+kubectl port-forward svc/<nama-svc> 8080:80 = Port forward service ke local
+kubectl get events = Lihat event terbaru di cluster
+kubectl top pod = Lihat penggunaan CPU/mem (butuh metrics-server)
+
+kubectl get ns = Daftar namespace
+kubectl config get-contexts = Lihat semua context kubectl
+kubectl config current-context = Context aktif sekarang
+kubectl config use-context <nama> = Pindah context
+kubectl get pod -n <nama-namespace> = Menampilkan pod di namespace tertentu
+
+kubectl api-resources = Daftar semua resource yang tersedia di cluster
+kubectl explain pod = Penjelasan struktur spesifik dari resource
+kubectl version --short = Versi client dan server
+kubectl config view --minify = Info context aktif saat ini

@@ -49,6 +49,20 @@ docker build --tag name #build docker dengan ketentuan yang ada di file Dockerfi
 #push image
 docker push raakfp/simple-apps
 
+-order by name
+(echo -e "REPOSITORY\tTAG\tIMAGE ID\tCREATED\tSIZE"; docker images --format "{{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}" | sort) | column -t -s $'\t'
+
+-more than 1gb
+(echo -e "REPOSITORY\tTAG\tIMAGE ID\tCREATED\tSIZE"; \
+docker images --format "{{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}" | \
+awk -F'\t' '{
+  size = $5;
+  if (size ~ /GB/) {
+    gsub("GB","",size);
+    if (size + 0 > 1) print $0;
+  }
+}') | column -t -s $'\t'
+
 
 #docker compose
 
@@ -71,3 +85,12 @@ account
 rakafitrap@gmail.com
 rakafp
 123456@ABcd
+
+#dockerhub
+rakafd
+123456@abc
+
+=================================
+docker hub
+<registry>/<namespace>/<image>:<tag>
+exp: docker.io/bitnami/mongodb:6.0.2
