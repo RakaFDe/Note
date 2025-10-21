@@ -1,0 +1,151 @@
+minkube
+
+how to install
+https://minikube.sigs.k8s.io/docs/start/#:~:text=1,Installation
+
+how to locate : which minikube
+
+check version : minikube version
+start minikube : minikube start / time minikube start / minikube start --driver=docker
+
+kendala jika menjalankan dengan user root, coba ganti dengan user biasa lalu modify
+sudo usermod -aG docker $USER
+newgrp docker
+
+install kubectl : https://kubernetes.io/docs/tasks/tools/
+
+check kubectl : kubectl version --client / kubectl version --client --output=yaml
+
+verivy kubectl conf : kubectl cluster-info
+
+
+cara tunneling dasboard dari vps ke local
+
+minikube dashboard --url
+ssh -L 8001:127.0.0.1:39775 user@IP_VPS (sesuaikan port pada addres yang muncul)
+
+http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/workloads?namespace=default
+
+---pod
+run/create pod base on yaml files : kubectl apply -f pod.yaml
+
+inspect pod : kubectl describe pod / kubectl describe service webserver
+inspect and show port only: kubectl describe svc webserver | grep -i port
+
+get node ip address : kubectl describe node | grep -i address -A 1
+while using minikube : minikube ip
+
+how to reach pod:ip + port ex* curl http://192.168.49.2:32088
+
+take look pod/request : kubectl exec mypod curl http://10.244.0.6:80 / kubectl exec mypod -- curl http://10.244.0.6:80
+
+---service
+kubectl apply -f service.yaml
+check service list : kubectl get service
+check service detail :  kubectl describe service webserver
+
+---namespace
+check namespace : kubectl get namespace
+check namespace all : kubectl get deployments --all-namespaces
+delete pod and service : kubectl delete pod mypod && kubectl delete service webserver
+create pod and service on namespace : kubectl apply -f pod.yaml -n webserver-ns && kubectl apply -f service.yaml -n webserver-ns
+
+check object on namespace : kubectl api-resources --namespaced=true 
+check object on namespace which cant save : kubectl api-resources --namespaced=false
+
+---log
+check log pod:  kubectl logs <podname> poller -f -n deployments 
+ex* kubectl logs support-tier-54564dbbc6-v5lv6 poller -f -n deployments
+
+
+
+
+=============================
+
+
+
+
+Minikube & Kubernetes Command List
+==================================
+
+🟢 Minikube - Cluster Management
+--------------------------------
+Memulai Minikube:
+    minikube start
+
+Menghentikan Minikube:
+    minikube stop
+
+Menghapus cluster Minikube:
+    minikube delete
+
+Mengecek status cluster:
+    minikube status
+
+Melihat IP dari Minikube:
+    minikube ip
+
+Mengakses dashboard web UI:
+    minikube dashboard
+
+
+📦 Kubernetes Object Management (via `kubectl`)
+----------------------------------------------
+Melihat semua resource di semua namespace:
+    kubectl get all --all-namespaces
+
+Melihat semua pod di namespace tertentu:
+    kubectl get pods -n [nama-namespace]
+
+Melihat detail object (contoh: pod):
+    kubectl describe pod [nama-pod]
+
+Melihat log pod:
+    kubectl logs [nama-pod]
+
+Melihat log dari container tertentu dalam pod:
+    kubectl logs [nama-pod] -c [nama-container]
+
+Masuk ke dalam pod (jika ada shell):
+    kubectl exec -it [nama-pod] -- /bin/sh
+
+Melihat services yang sedang berjalan:
+    kubectl get svc
+
+Melihat deployment yang aktif:
+    kubectl get deployments
+
+Melihat events di cluster:
+    kubectl get events --sort-by=.metadata.creationTimestamp
+
+
+🔧 Konfigurasi & Tools Bantu
+----------------------------
+Mengecek versi Minikube dan Kubernetes:
+    minikube version
+    kubectl version
+
+Melihat konfigurasi kubeconfig aktif:
+    kubectl config view
+
+Mengubah context atau namespace:
+    kubectl config set-context --current --namespace=[nama-namespace]
+
+Mengecek resource node:
+    kubectl describe node
+
+Mengecek pemakaian resource (CPU, Memori) - (butuh metrics-server):
+    kubectl top node
+    kubectl top pod
+
+
+🌐 Akses Layanan dari Minikube
+------------------------------
+Mengekspose service ke browser lokal:
+    minikube service [nama-service]
+
+Melihat URL dari service:
+    minikube service [nama-service] --url
+
+Forward port dari pod ke lokal:
+    kubectl port-forward pod/[nama-pod] [port-lokal]:[port-pod]
